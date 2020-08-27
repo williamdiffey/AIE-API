@@ -16,7 +16,7 @@ const ArticlesService = {
             json_build_object(
               'id', usr.id,
               'user_name', usr.user_name,
-              'full_name', usr.full_name,
+              'regcode', usr.regcode,
               'admin', usr.admin,
               'date_created', usr.date_created,
               'date_modified', usr.date_modified
@@ -47,7 +47,7 @@ const ArticlesService = {
                 SELECT
                   usr.id,
                   usr.user_name,
-                  usr.full_name,
+                  usr.regcode,
                   usr.admin,
                   usr.date_created,
                   usr.date_modified
@@ -73,7 +73,7 @@ const ArticlesService = {
       author: {
         id: author.id,
         user_name: author.user_name,
-        full_name: author.full_name,
+        regcode: author.regcode,
         admin: author.admin,
         date_created: new Date(author.date_created),
         date_modified: new Date(author.date_modified) || null,
@@ -91,7 +91,7 @@ const ArticlesService = {
       user: {
         id: user.id,
         user_name: user.user_name,
-        full_name: user.full_name,
+        regcode: user.regcode,
         admin: user.admin,
         date_created: new Date(user.date_created),
         date_modified: new Date(user.date_modified) || null,

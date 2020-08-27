@@ -6,10 +6,10 @@ TRUNCATE
   aie_users
   RESTART IDENTITY CASCADE;
 
-INSERT INTO aie_users (user_name, full_name, admin, password)
+INSERT INTO aie_users (user_name, regcode, admin, password)
 VALUES
-  ('Big Dave', 'Dave Davis', false, '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
-  ('Nice Guy Kev', 'Kevin Kevins', true, '$2a$12$VQ5HgWm34QQK2rJyLc0lmu59cy2jcZiV6U1.bE8rBBnC9VxDf/YQO');
+  ('Big Dave', 'a43ga4dfcv', false, '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
+  ('Nice Guy Kev', 'addsfgfgfsa', true, '$2a$12$VQ5HgWm34QQK2rJyLc0lmu59cy2jcZiV6U1.bE8rBBnC9VxDf/YQO');
   
 INSERT INTO aie_articles (title, style, author_id, content)
 VALUES

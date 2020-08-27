@@ -16,7 +16,7 @@ const CommentsService = {
                 SELECT
                   usr.id,
                   usr.user_name,
-                  usr.full_name,
+                  usr.regcode,
                   usr.admin,
                   usr.date_created,
                   usr.date_modified
@@ -49,7 +49,7 @@ const CommentsService = {
       user: {
         id: user.id,
         user_name: user.user_name,
-        full_name: user.full_name,
+        regcode: user.regcode,
         admin: user.admin,
         date_created: new Date(user.date_created),
         date_modified: new Date(user.date_modified) || null,

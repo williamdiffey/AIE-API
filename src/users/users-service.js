@@ -11,12 +11,12 @@ const UsersService = {
       .then((user) => !!user)
   },
 
-  // hasAdmin(db, user_id) {
-  //   return db('aie_users')
-  //     .where({ user_id })
-  //     .first()
-  //     .then((user) => user)
-  // },
+  checkCode(db, user_code) {
+    return db('aie_regcodes')
+      .where({ user_code })
+      .delete()
+      .then((user) => user)
+  },
 
   insertUser(db, newUser) {
     return db
@@ -46,7 +46,7 @@ const UsersService = {
   serializeUser(user) {
     return {
       id: user.id,
-      full_name: xss(user.full_name),
+      regcode: xss(user.regcode),
       user_name: xss(user.user_name),
       admin: xss(user.nick_name),
       date_created: new Date(user.date_created),
