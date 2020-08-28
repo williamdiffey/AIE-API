@@ -1,46 +1,54 @@
 const express = require('express')
 const ArticlesService = require('./articles-service')
-const AuthService = require('../auth/auth-service')
-const UsersService = require('../users/users-service')
 const { requireAuth } = require('../middleware/jwt-auth')
+const { escapeAttrValue } = require('xss')
 
 const articlesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-articlesRouter.post('/newarticle', jsonBodyParser, (req, res, next) => {
-  const { title, content, style } = req.body
-  const author_id = '1'
-  console.log(req.body)
-  // console.log(req.user)
+articlesRouter.post(
+  '/newarticle',
+  requireAuth,
+  jsonBodyParser,
+  (req, res, next) => {
+    const { title, content, style } = req.body
+    const author_id = req.user.id
+    const admin = req.user.admin
 
-  for (const field of ['title', 'content', 'style'])
-    if (!req.body[field])
-      return res.status(400).json({
-        error: `Missing '${field}' in request body`,
+    if (admin !== true)
+      return res
+        .status(404)
+        .json({ error: `You must be logged in as an admin to add new posts` })
+
+    for (const field of ['title', 'content', 'style'])
+      if (!req.body[field])
+        return res.status(400).json({
+          error: `Missing '${field}' in request body`,
+        })
+
+    // console.log(req.user_id)
+    const newArticle = {
+      title,
+      content,
+      style,
+      author_id,
+      date_created: 'now()',
+    }
+    console.log(`newArticle is ${newArticle}`)
+
+    return ArticlesService.insertArticle(req.app.get('db'), newArticle)
+      .then((article) => {
+        res.status(201).json({
+          message: `success`,
+        })
+        // posix to create consistent paths across different OS
+        // .location(path.posix.join(req.originalUrl, `/${article.id}`))
+        // .json(articlesService.serializeArticle(article))
       })
 
-  // console.log(req.user_id)
-  const newArticle = {
-    title,
-    content,
-    style,
-    author_id,
-    date_created: 'now()',
-  }
-  console.log(`newArticle is ${newArticle}`)
-
-  return ArticlesService.insertArticle(req.app.get('db'), newArticle)
-    .then((article) => {
-      res.status(201).json({
-        message: `success`,
-      })
-      // posix to create consistent paths across different OS
-      // .location(path.posix.join(req.originalUrl, `/${article.id}`))
-      // .json(articlesService.serializeArticle(article))
-    })
-
-    .catch(next)
-})
+      .catch(next)
+  },
+)
 
 articlesRouter.route('/').get((req, res, next) => {
   ArticlesService.getAllArticles(req.app.get('db'))
