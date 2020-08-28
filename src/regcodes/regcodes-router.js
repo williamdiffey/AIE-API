@@ -1,18 +1,18 @@
 const express = require('express')
 const RegcodesService = require('./regcodes-service')
-// const { requireAuth } = require('../middleware/jwt-auth')
+const { requireAuth } = require('../middleware/jwt-auth')
 
 const regcodesRouter = express.Router()
 const jsonBodyParser = express.json()
 
 regcodesRouter.post(
   '/newregcode',
-  //   requireAuth,
+  requireAuth,
   jsonBodyParser,
   (req, res, next) => {
     const { regcode } = req.body
-    // const admin = req.user.admin
-    const admin = true
+    const admin = req.user.admin
+    // const admin = true
 
     if (admin !== true)
       return res
