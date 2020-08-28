@@ -7,15 +7,19 @@ const { requireAuth } = require('../middleware/jwt-auth')
 const articlesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-articlesRouter.post('/newpost', jsonBodyParser, (req, res, next) => {
-  const { title, content, style, author_id } = req.body
+articlesRouter.post('/newarticle', jsonBodyParser, (req, res, next) => {
+  const { title, content, style } = req.body
+  const author_id = '1'
+  console.log(req.body)
+  // console.log(req.user)
 
-  for (const field of ['title', 'content', 'style', 'author_id'])
+  for (const field of ['title', 'content', 'style'])
     if (!req.body[field])
       return res.status(400).json({
         error: `Missing '${field}' in request body`,
       })
 
+  // console.log(req.user_id)
   const newArticle = {
     title,
     content,
@@ -23,6 +27,7 @@ articlesRouter.post('/newpost', jsonBodyParser, (req, res, next) => {
     author_id,
     date_created: 'now()',
   }
+  console.log(`newArticle is ${newArticle}`)
 
   return ArticlesService.insertArticle(req.app.get('db'), newArticle)
     .then((article) => {
