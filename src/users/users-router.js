@@ -17,32 +17,39 @@ usersRouter.post('/', jsonBodyParser, (req, res, next) => {
   // TODO: check user_name doesn't start with spaces
 
   const passwordError = UsersService.validatePassword(password)
-
   if (passwordError) return res.status(400).json({ error: passwordError })
 
-  UsersService.hasUserWithUserName(req.app.get('db'), user_name)
-    .then((hasUserWithUserName) => {
-      if (hasUserWithUserName)
-        return res.status(400).json({ error: `Username already taken` })
+  const codeCheck = UsersService.validCode(req.app.get('db'), regcode)
+    .then((validCode) => {
+      if (!validCode) return res.status(400).json({ error: `Invalid code` })
+      else
+        UsersService.hasUserWithUserName(req.app.get('db'), user_name).then(
+          (hasUserWithUserName) => {
+            if (hasUserWithUserName)
+              return res.status(400).json({ error: `Username already taken` })
 
-      return UsersService.hashPassword(password).then((hashedPassword) => {
-        const newUser = {
-          user_name,
-          password: hashedPassword,
-          regcode,
-          admin,
-          date_created: 'now()',
-        }
+            return UsersService.hashPassword(password).then(
+              (hashedPassword) => {
+                const newUser = {
+                  user_name,
+                  password: hashedPassword,
+                  regcode,
+                  admin: false,
+                  date_created: 'now()',
+                }
 
-        return UsersService.insertUser(req.app.get('db'), newUser).then(
-          (user) => {
-            res
-              .status(201)
-              .location(path.posix.join(req.originalUrl, `/${user.id}`))
-              .json(UsersService.serializeUser(user))
+                return UsersService.insertUser(req.app.get('db'), newUser).then(
+                  (user) => {
+                    res
+                      .status(201)
+                      .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                      .json(UsersService.serializeUser(user))
+                  },
+                )
+              },
+            )
           },
         )
-      })
     })
     .catch(next)
 })

@@ -11,11 +11,12 @@ const UsersService = {
       .then((user) => !!user)
   },
 
-  checkCode(db, user_code) {
+  validCode(db, regcode) {
     return db('aie_regcodes')
-      .where({ user_code })
+      .where({ regcode })
+      .first()
       .delete()
-      .then((user) => user)
+      .then((regcode) => regcode)
   },
 
   insertUser(db, newUser) {
