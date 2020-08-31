@@ -8,15 +8,18 @@ TRUNCATE
 
 INSERT INTO aie_users (user_name, regcode, admin, password)
 VALUES
-  ('Big Dave', 'a43ga4dfcv', false, '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
-  ('Nice Guy Kev', 'addsfgfgfsa', true, '$2a$12$VQ5HgWm34QQK2rJyLc0lmu59cy2jcZiV6U1.bE8rBBnC9VxDf/YQO');
+  ('Teacher Dave', 'a43ga4dfcv', true, '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
+  ('Jason', '12345', true, '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
+  ('Ann', '67890', true, '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
+  ('Terry', '9876', true, '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
+  ('Kim', '5432', false, '$2a$12$VQ5HgWm34QQK2rJyLc0lmu59cy2jcZiV6U1.bE8rBBnC9VxDf/YQO');
   
 INSERT INTO aie_articles (title, style, author_id, content)
 VALUES
-  ('First post!', 'Grammar', 1,
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consequuntur deserunt commodi, nobis qui inventore corrupti iusto aliquid debitis unde non. Adipisci, pariatur. Molestiae, libero esse hic adipisci autem neque?'),
-  ('Second post!', 'Story', 2,
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, exercitationem cupiditate dignissimos est perspiciatis, nobis commodi alias saepe atque facilis labore sequi deleniti. Sint, adipisci facere! Velit temporibus debitis rerum.');
+  ('Wednesday homework', 'Grammar', 1,
+    'A quick review of the past tense we studied today! Tell me about 5 things you did yesterday using these words (you will have to change them to the past tense): eat, sleep, drink, go, meet, watch'),
+  ('Weekend assignment', 'Story', 1,
+    'Tell me about a time you went to another country on holiday. Write no less than 5 sentences please!');
   
 INSERT INTO aie_comments (
   text,
@@ -24,39 +27,29 @@ INSERT INTO aie_comments (
   user_id
 ) VALUES
   (
-    'This post is amazing',
+    'I went to the school, I ate a chocolate, I slept a lot, I met my friends in park, I did not watch TV',
     1,
     2
   ),
   (
-    'Yeh I agree it''s amazing',
+    'I went cinema, I ate chicken, I slept at 11pm, I met my cousins, I watched a movie at the cinema',
     1,
-    1
+    3
   ),
   (
-    'I would go so far as to say it''s double amazing',
+    'I went home, I slept, I did not meet my friends, I did not watch TV, I ate rice',
     1,
-    2
+    4
   ),
   (
-    'A-mazing!',
+    'I went to grandmothers house, I slept late, I watched Korean drama, I ate Kim Chi',
     1,
-    1
+    5
   ),
   (
-    'That''s some interesting lorems you raise',
+    'Last year I went to Vietnam - Da Nang with my family. We stayed in a hotel next to the sea. We went to Hoi An and bought clothes. I went swimming everyday. We ate lots of Vietnamese food. My brother got sunburn. ',
     2,
-    1
-  ),
-  (
-    'Yeh totally I''d never thought about lorems like that before',
-    2,
-    2
-  ),
-  (
-    'So you''re saying consectetur adipisicing elit?',
-    2,
-    1
+    6
   );
 
 COMMIT;
